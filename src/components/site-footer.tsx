@@ -19,18 +19,15 @@ export function SiteFooter() {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="mt-auto border-t border-border/80 bg-background"
     >
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:flex-row sm:items-start sm:justify-between sm:px-6 lg:px-8">
-        <div className="max-w-sm">
-          <p className="text-sm font-semibold text-foreground">Futuremade</p>
-          <p className="mt-2 text-sm leading-relaxed text-muted">{footer.tagline}</p>
-        </div>
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p className="text-sm font-semibold tracking-tight text-foreground">{footer.brand}</p>
 
-        <div className="flex flex-col gap-6 sm:items-end">
+        <div className="flex flex-col gap-4 sm:items-end">
           <div>
             <p className="text-xs font-medium uppercase tracking-wider text-subtle">
               {footer.social}
             </p>
-            <ul className="mt-3 flex items-center gap-3">
+            <ul className="mt-2 flex items-center gap-3">
               <li>
                 <a
                   href="https://www.linkedin.com/"
@@ -67,8 +64,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-border/60 py-6 text-center text-xs text-subtle">
-        © {new Date().getFullYear()} Futuremade
+      <div className="border-t border-border/60 py-3 text-center text-xs text-subtle">
+        © {new Date().getFullYear()} {footer.brand}
       </div>
     </motion.footer>
   );

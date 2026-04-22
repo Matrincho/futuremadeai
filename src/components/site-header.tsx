@@ -63,7 +63,7 @@ export function SiteHeader() {
 
           <Link
             href={INQUIRY_PATH}
-            className="hidden max-w-[10rem] items-center justify-center rounded-md border border-border bg-surface px-2.5 py-1.5 text-center text-xs font-medium leading-snug text-foreground shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-200 hover:border-accent/60 hover:bg-surface-hover hover:shadow-[0_0_20px_-6px_var(--color-accent-glow)] sm:max-w-[11rem] sm:px-3 sm:text-sm md:inline-flex"
+            className="hidden min-h-11 max-w-[11rem] shrink-0 items-center justify-center rounded-lg bg-accent px-4 text-center text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_40px_-8px_var(--color-accent-glow)] active:translate-y-0 md:inline-flex"
           >
             {t.nav.cta}
           </Link>
@@ -110,7 +110,7 @@ export function SiteHeader() {
               <Link
                 href={INQUIRY_PATH}
                 onClick={() => setOpen(false)}
-                className="mt-1 inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-surface px-3 text-center text-sm font-medium leading-snug text-foreground transition-[transform,box-shadow,border-color] hover:border-accent/60 hover:shadow-[0_0_20px_-6px_var(--color-accent-glow)]"
+                className="mt-1 inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 text-center text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] transition-[transform,box-shadow,background-color] hover:bg-[#2563eb] hover:shadow-[0_0_40px_-8px_var(--color-accent-glow)] active:translate-y-0"
               >
                 {t.nav.cta}
               </Link>

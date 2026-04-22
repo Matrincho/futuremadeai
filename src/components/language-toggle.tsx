@@ -12,7 +12,7 @@ export function LanguageToggle({ className = "", compact = false }: Props) {
 
   return (
     <div
-      className={`inline-flex rounded-lg border border-border bg-surface p-1 ${className}`}
+      className={`inline-flex items-center rounded-lg border border-border bg-surface p-1 ${compact ? "" : "min-h-11"} ${className}`}
       role="group"
       aria-label={t.footer.langLabel}
     >

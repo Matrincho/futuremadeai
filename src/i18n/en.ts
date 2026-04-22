@@ -1,132 +1,144 @@
 import type { MarketingCopy } from "./types";
+import { inquiryEn } from "./inquiry-en";
 
 export const en: MarketingCopy = {
   nav: {
     services: "Services",
-    process: "Process",
-    work: "Work",
+    process: "Method",
+    work: "Experience",
     cta: "Contact us",
     contact: "Contact",
   },
   hero: {
     kicker: "AI agency",
-    title: "Systems that think with you - not instead of you.",
-    body: "We design, build, and ship automation and AI workflows that feel inevitable: calm interfaces, reliable backends, and measurable lift. Replace this with your final positioning when ready.",
+    title: "Your business, powered by AI.",
+    body: "We design and implement AI systems and workflows that fit naturally into your business. No overcomplicated explanations—just automation that works.",
     ctaPrimary: "Contact us",
   },
   pain: {
-    title: "Why automation?",
-    subtitle:
-      "Manual glue work compounds quietly—until velocity, quality, and morale all take a hit.",
+    title: "Why automate your business?",
+    intro:
+      "Manual work is the invisible drag on your growth. While your team re-enters data, your competitors are shipping innovations.",
+    problemLabel: "Problem",
+    resultLabel: "Result",
     cards: [
       {
-        title: "Time leaks everywhere",
-        body: "Teams re-key data, chase approvals, and context-switch across tools. High-skill people spend their week on low-skill repetition.",
+        title: "Time is your most expensive resource",
+        problem:
+          "Skilled people lose hours to copy-paste, email threads, and admin work.",
+        result:
+          "Automation gives those hours back—so you focus on strategy, not the process.",
       },
       {
-        title: "Errors scale with volume",
-        body: "Humans are brilliant at judgment calls—and brittle at rote precision. As throughput grows, small mistakes become expensive incidents.",
+        title: "Human error is inevitable",
+        problem:
+          "As volume grows, small mistakes in data turn into expensive failures.",
+        result:
+          "AI systems run with consistent precision 24/7, cutting the risk of omissions and technical incidents.",
       },
       {
-        title: "Opportunity cost is real",
-        body: "Every sprint spent babysitting spreadsheets is a sprint not spent shipping product, serving customers, or tightening the core loop.",
+        title: "Scale without chaos",
+        problem:
+          "More clients usually means more headcount—and more cost.",
+        result:
+          "With the right AI workflows, you can double capacity without growing the team or operational stress.",
       },
     ],
   },
   services: {
     title: "Services",
-    subtitle: "Problem → solution → method, in plain language.",
+    subtitle: "Problem → solution → outcome. In plain language.",
     items: [
       {
-        name: "Workflow automation",
-        problem: "Critical paths live in inboxes and side channels.",
-        solution: "Durable pipelines with clear ownership and observability.",
-        method: "Map the real process, instrument it, then automate the boring middle.",
+        name: "Process automation",
+        problem: "Data scattered across spreadsheets and email. Manual information handoffs.",
+        solution: "One ecosystem that connects your tools (CRM, databases).",
+        method: "Process analysis and full automation—from inquiry to transaction.",
       },
       {
-        name: "AI copilots & retrieval",
-        problem: "Knowledge is scattered; answers are slow or inconsistent.",
-        solution: "Grounded assistants with citations, permissions, and guardrails.",
-        method: "Start from trusted sources, evaluate quality continuously, tighten the loop.",
+        name: "AI assistants & chatbots",
+        problem: "Slow support and time lost answering the same questions.",
+        solution: "Smart AI that answers, qualifies leads, and books appointments 24/7.",
+        method: "Model training on your data for precise communication and sales.",
       },
       {
-        name: "Custom internal tools",
-        problem: "Off-the-shelf tools force awkward workarounds.",
-        solution: "Focused interfaces that match how your team actually works.",
-        method: "Prototype fast on real data, harden for edge cases, ship incrementally.",
+        name: "Next-gen web platforms",
+        problem: "Static brochure sites that don’t deliver real results.",
+        solution: "Fast platforms built to turn traffic into clients.",
+        method: "Modern design wired straight to your backend and workflows.",
       },
     ],
   },
   process: {
     title: "How we work",
-    subtitle: "A tight loop from first conversation to production leverage.",
+    subtitle: "From idea to real results. Without unnecessary complexity.",
     steps: [
       {
-        title: "Audit",
+        title: "Conversation",
         bullets: [
-          "Map workflows, systems, and failure modes",
-          "Quantify time, risk, and upside",
-          "Agree on success metrics and scope",
+          "We review how your business runs and where revenue is left on the table.",
+          "We align on exactly what the finished solution will look like for you.",
+          "We set clear goals so you know what to expect.",
         ],
       },
       {
-        title: "Design",
+        title: "Plan",
         bullets: [
-          "Information architecture + UX for operators",
-          "Safety, permissions, and rollback paths",
-          "Milestone plan with visible checkpoints",
+          "We outline execution steps tailored to your needs.",
+          "We schedule rollout so it does not disrupt your day-to-day work.",
+          "We agree a target launch date for the system.",
         ],
       },
       {
-        title: "Build",
+        title: "Execution",
         bullets: [
-          "Implement integrations and core logic",
-          "Automated checks + staging environments",
-          "Weekly demos so surprises die early",
+          "We build and configure everything needed for reliable operation.",
+          "We test the system under real conditions before go-live.",
+          "We keep you updated on progress at every step.",
         ],
       },
       {
-        title: "Scale",
+        title: "Result",
         bullets: [
-          "Hardening, monitoring, and runbooks",
-          "Training and adoption support",
-          "Iterate on the next bottleneck",
+          "We launch, then verify everything is working as it should.",
+          "We show your team how to work with the new tools.",
+          "We stay available for support and new ideas.",
         ],
       },
     ],
   },
   caseStudy: {
-    eyebrow: "Featured engagement",
-    title: "From weekly chaos to a calm operating rhythm",
-    lead: "A multi-site operator needed reliability without hiring another coordination layer. Placeholder narrative—swap in your real story, metrics, and quotes.",
-    challengeTitle: "Challenge",
+    eyebrow: "Real experience",
+    title: "From data chaos to full automation",
+    lead: "How one business stopped losing time in spreadsheets and chats so it could focus on the work that actually matters.",
+    challengeTitle: "The challenge",
     challenge:
-      "Scheduling, inventory checks, and customer follow-ups lived in a patchwork of chats and spreadsheets. Managers could not see what was true without asking three people.",
-    approachTitle: "Approach",
+      "Schedules, inventory, and customer inquiries were scattered across dozens of spreadsheets and chat threads. Managers had no clear picture of how the business was doing without polling the whole team.",
+    approachTitle: "The solution",
     approach:
-      "We consolidated the source of truth, automated the repetitive sync steps, and added lightweight approvals where judgment mattered. Operators kept familiar surfaces; the system did the carrying.",
-    outcomeTitle: "Outcome",
+      "We unified everything into one system, automated every repeatable step, and added smart notifications only where a human decision still belongs.",
+    outcomeTitle: "The result",
     outcome:
-      "Fewer missed handoffs, faster end-of-day reconciliation, and a leadership view that updates itself. Exact numbers go here when you have permission to publish them.",
+      "No more lost inquiries or data mistakes. Leadership sees everything in real time while the system keeps running quietly in the background.",
     metrics: [
-      { label: "Manual hours reduced", value: "40%+" },
-      { label: "Time-to-close (internal)", value: "3× faster" },
-      { label: "Incident rate (ops)", value: "↓ materially" },
+      { label: "Time saved on manual work", value: "40%+" },
+      { label: "Handling new inquiries", value: "3× faster" },
+      { label: "Missed data or forgotten clients", value: "0%" },
     ],
     quote:
-      "“We stopped playing telephone with our own data. The week finally feels under control.”",
-    attribution: "Placeholder quote · Operations lead",
+      "“We stopped losing hours moving data around. Our processes are finally under control.”",
+    attribution: "Client · operations team",
   },
   contact: {
     eyebrow: "Next step",
-    title: "Tell us what you are building",
-    body: "Share context, constraints, and what “winning” looks like. We will respond with next steps—or a clear no if we are not the right fit.",
+    title: "Tell us about your project.",
+    body: "Share your goal and the challenges you are facing. We will reply with concrete next steps—or an honest “no” if we are not the right partner for you.",
     cta: "Contact us",
-    secondary: "Prefer email later? You can still start here.",
   },
   footer: {
-    tagline: "Automation and AI systems for serious operators.",
+    brand: "FutureMadeAI",
     social: "Connect",
     langLabel: "Language",
   },
+  inquiry: inquiryEn,
 };

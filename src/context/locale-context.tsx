@@ -4,12 +4,15 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
 import type { Locale } from "@/i18n/types";
 import { marketing } from "@/i18n";
+
+const LOCALE_STORAGE_KEY = "futuremade-locale";
 
 type LocaleContextValue = {
   locale: Locale;
@@ -22,8 +25,25 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
 
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
+      if (stored === "bg" || stored === "en") {
+        setLocaleState(stored);
+        document.documentElement.lang = stored === "bg" ? "bg" : "en";
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
+    try {
+      localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    } catch {
+      /* ignore */
+    }
     if (typeof document !== "undefined") {
       document.documentElement.lang = next === "bg" ? "bg" : "en";
     }

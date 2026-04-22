@@ -1,5 +1,39 @@
 export type Locale = "en" | "bg";
 
+export type InquirySelectOption = { value: string; label: string };
+
+/** Minimal inquiry form copy (aligned fields across locales). */
+export type InquiryCopy = {
+  back: string;
+  title: string;
+  lead: string;
+  submit: string;
+  successTitle: string;
+  successBody: string;
+  labels: {
+    firstName: string;
+    lastName: string;
+    workEmail: string;
+    company: string;
+    companyWebsite: string;
+    role: string;
+    companySize: string;
+    projectDescription: string;
+  };
+  placeholders: {
+    firstName: string;
+    lastName: string;
+    workEmail: string;
+    company: string;
+    companyWebsite: string;
+    roleSelect: string;
+    companySizeSelect: string;
+    projectDescription: string;
+  };
+  roles: InquirySelectOption[];
+  companySizes: InquirySelectOption[];
+};
+
 export type MarketingCopy = {
   nav: { services: string; process: string; work: string; contact: string; cta: string };
   hero: {
@@ -10,8 +44,10 @@ export type MarketingCopy = {
   };
   pain: {
     title: string;
-    subtitle: string;
-    cards: { title: string; body: string }[];
+    intro: string;
+    problemLabel: string;
+    resultLabel: string;
+    cards: { title: string; problem: string; result: string }[];
   };
   services: {
     title: string;
@@ -42,11 +78,11 @@ export type MarketingCopy = {
     title: string;
     body: string;
     cta: string;
-    secondary: string;
   };
   footer: {
-    tagline: string;
+    brand: string;
     social: string;
     langLabel: string;
   };
+  inquiry: InquiryCopy;
 };

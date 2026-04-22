@@ -44,7 +44,6 @@ export function CtaSection() {
             {contact.title}
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted sm:text-xl">{contact.body}</p>
-          <p className="mt-3 text-sm text-subtle sm:text-base">{contact.secondary}</p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
             <Link href={INQUIRY_PATH} className={ctaPrimaryButton}>

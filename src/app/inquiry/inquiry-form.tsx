@@ -1,116 +1,23 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { useLocaleContext } from "@/context/locale-context";
+import { inquiryEn } from "@/i18n/inquiry-en";
+import { inquiryBg } from "@/i18n/inquiry-bg";
 
-const industries = [
-  "",
-  "Technology",
-  "Professional services",
-  "Finance",
-  "Healthcare",
-  "E-commerce",
-  "Manufacturing",
-  "Media & marketing",
-  "Education",
-  "Other",
-] as const;
-
-const companySizes = ["", "1–10", "11–50", "51–200", "201–1000", "1000+"] as const;
-
-const primaryGoals = [
-  "",
-  "Reduce manual work",
-  "Improve decision quality / speed",
-  "Customer-facing AI product",
-  "Internal copilot / knowledge",
-  "Data extraction & routing",
-  "Not sure yet",
-] as const;
-
-const budgetRanges = [
-  "",
-  "Under $15k",
-  "$15k–$50k",
-  "$50k–$150k",
-  "$150k–$500k",
-  "$500k+",
-  "Prefer to discuss",
-] as const;
-
-const timelines = [
-  "",
-  "ASAP / already blocked",
-  "Within 4 weeks",
-  "1–3 months",
-  "3–6 months",
-  "6+ months",
-  "Exploring / no fixed date",
-] as const;
-
-const referralSources = [
-  "",
-  "Search",
-  "LinkedIn",
-  "Referral",
-  "Conference / event",
-  "Used your product / saw case study",
-  "Other",
-] as const;
-
-const preferredContact = ["", "Email", "Phone", "Either"] as const;
-
-const serviceOptions = [
-  "Workflow & ops automation",
-  "LLM / agent systems",
-  "Custom internal tools",
-  "Integrations (CRM, ERP, data)",
-  "Retrieval / knowledge bases",
-  "Analytics & reporting",
-] as const;
-
-const sectionEase = [0.22, 1, 0.36, 1] as const;
-
-function Section({
-  title,
-  description,
-  children,
-  index,
-}: {
-  title: string;
-  description?: string;
-  children: ReactNode;
-  index: number;
-}) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.section
-      initial={reduceMotion ? false : { y: 14 }}
-      whileInView={{ y: 0 }}
-      viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: reduceMotion ? 0 : 0.45, delay: index * 0.05, ease: sectionEase }}
-      className="rounded-xl border border-border bg-surface/60 p-5 shadow-sm sm:p-6"
-    >
-      <h2 className="text-lg font-semibold tracking-tight text-foreground">{title}</h2>
-      {description ? (
-        <p className="mt-1 text-sm text-muted">{description}</p>
-      ) : null}
-      <div className="mt-5 space-y-4">{children}</div>
-    </motion.section>
-  );
-}
-
-function Label({
+function FieldLabel({
   htmlFor,
   children,
   required,
 }: {
   htmlFor: string;
-  children: ReactNode;
+  children: React.ReactNode;
   required?: boolean;
 }) {
   return (
-    <label htmlFor={htmlFor} className="block text-sm font-medium text-foreground">
+    <label htmlFor={htmlFor} className="block text-xs font-medium uppercase tracking-wider text-subtle">
       {children}
       {required ? <span className="text-accent"> *</span> : null}
     </label>
@@ -118,19 +25,13 @@ function Label({
 }
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-subtle focus:border-accent/70 focus:ring-2 focus:ring-accent/25";
+  "mt-2 w-full rounded-lg border border-border bg-background/90 px-3 py-2.5 text-sm text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-subtle/80 focus:border-accent/60 focus:ring-2 focus:ring-accent/20";
 
 export function InquiryForm() {
+  const { locale } = useLocaleContext();
+  const inq = locale === "bg" ? inquiryBg : inquiryEn;
   const [submitted, setSubmitted] = useState(false);
   const reduceMotion = useReducedMotion();
-
-  const [services, setServices] = useState<Record<string, boolean>>(
-    () => Object.fromEntries(serviceOptions.map((s) => [s, false])),
-  );
-
-  function toggleService(key: string) {
-    setServices((prev) => ({ ...prev, [key]: !prev[key] }));
-  }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -140,258 +41,140 @@ export function InquiryForm() {
   if (submitted) {
     return (
       <motion.div
-        initial={reduceMotion ? false : { y: 8 }}
-        animate={{ y: 0 }}
-        className="mt-10 rounded-xl border border-accent/30 bg-surface/80 p-8 text-center"
+        initial={reduceMotion ? false : { y: 8, opacity: 0.96 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="mt-8 rounded-2xl border border-accent/25 bg-surface/50 p-8 text-center shadow-sm"
       >
-        <p className="text-lg font-semibold text-foreground">Thanks — you&apos;re all set.</p>
-        <p className="mt-2 text-sm text-muted">
-          This form does not send data yet. When you connect a backend, you can
-          replace this message with a confirmation email flow.
-        </p>
+        <p className="text-lg font-semibold text-foreground">{inq.successTitle}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{inq.successBody}</p>
       </motion.div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="mt-10 space-y-8">
-      <Section
-        index={0}
-        title="Contact"
-        description="Who we should talk to and how to reach you."
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <Label htmlFor="fullName" required>
-              Full name
-            </Label>
-            <input id="fullName" name="fullName" className={inputClass} required autoComplete="name" />
-          </div>
-          <div>
-            <Label htmlFor="email" required>
-              Work email
-            </Label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className={inputClass}
-              required
-              autoComplete="email"
-            />
-          </div>
-          <div>
-            <Label htmlFor="phone">Phone</Label>
-            <input id="phone" name="phone" type="tel" className={inputClass} autoComplete="tel" />
-          </div>
-          <div>
-            <Label htmlFor="preferredContact">Preferred contact</Label>
-            <select id="preferredContact" name="preferredContact" className={inputClass}>
-              {preferredContact.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </Section>
-
-      <Section index={1} title="Company" description="Context about the organization.">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <Label htmlFor="company" required>
-              Company name
-            </Label>
-            <input id="company" name="company" className={inputClass} required autoComplete="organization" />
-          </div>
-          <div>
-            <Label htmlFor="jobTitle">Role / title</Label>
-            <input id="jobTitle" name="jobTitle" className={inputClass} autoComplete="organization-title" />
-          </div>
-          <div>
-            <Label htmlFor="website">Company website</Label>
-            <input id="website" name="website" type="url" className={inputClass} placeholder="https://" />
-          </div>
-          <div>
-            <Label htmlFor="companySize">Company size</Label>
-            <select id="companySize" name="companySize" className={inputClass}>
-              {companySizes.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <Label htmlFor="industry">Industry</Label>
-            <select id="industry" name="industry" className={inputClass}>
-              {industries.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </Section>
-
-      <Section
-        index={2}
-        title="Project"
-        description="What you want, where you are today, and what good looks like."
-      >
+    <motion.form
+      initial={reduceMotion ? false : { y: 12, opacity: 0.97 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      onSubmit={onSubmit}
+      className="mt-8 rounded-2xl border border-border/80 bg-surface/50 p-6 shadow-sm backdrop-blur-sm sm:p-8"
+    >
+      <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <Label htmlFor="primaryGoal">Primary goal</Label>
-          <select id="primaryGoal" name="primaryGoal" className={inputClass}>
-            {primaryGoals.map((o) => (
-              <option key={o || "empty"} value={o}>
-                {o || "Select…"}
+          <FieldLabel htmlFor="firstName" required>
+            {inq.labels.firstName}
+          </FieldLabel>
+          <input
+            id="firstName"
+            name="firstName"
+            className={inputClass}
+            required
+            autoComplete="given-name"
+            placeholder={inq.placeholders.firstName}
+          />
+        </div>
+        <div>
+          <FieldLabel htmlFor="lastName" required>
+            {inq.labels.lastName}
+          </FieldLabel>
+          <input
+            id="lastName"
+            name="lastName"
+            className={inputClass}
+            required
+            autoComplete="family-name"
+            placeholder={inq.placeholders.lastName}
+          />
+        </div>
+        <div>
+          <FieldLabel htmlFor="email" required>
+            {inq.labels.workEmail}
+          </FieldLabel>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            className={inputClass}
+            required
+            autoComplete="email"
+            placeholder={inq.placeholders.workEmail}
+          />
+        </div>
+        <div>
+          <FieldLabel htmlFor="company" required>
+            {inq.labels.company}
+          </FieldLabel>
+          <input
+            id="company"
+            name="company"
+            className={inputClass}
+            required
+            autoComplete="organization"
+            placeholder={inq.placeholders.company}
+          />
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <FieldLabel htmlFor="website">{inq.labels.companyWebsite}</FieldLabel>
+        <input
+          id="website"
+          name="website"
+          type="url"
+          className={inputClass}
+          autoComplete="url"
+          placeholder={inq.placeholders.companyWebsite}
+        />
+      </div>
+
+      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <div>
+          <FieldLabel htmlFor="role">{inq.labels.role}</FieldLabel>
+          <select id="role" name="role" className={inputClass} defaultValue="">
+            <option value="">{inq.placeholders.roleSelect}</option>
+            {inq.roles.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
               </option>
             ))}
           </select>
         </div>
-
-        <fieldset>
-          <legend className="text-sm font-medium text-foreground">Services of interest</legend>
-          <p className="mt-1 text-sm text-muted">Select any that apply.</p>
-          <ul className="mt-3 space-y-2">
-            {serviceOptions.map((label) => {
-              const id = `svc-${label.replace(/\W+/g, "-")}`;
-              return (
-                <li key={label} className="flex items-start gap-3">
-                  <input
-                    id={id}
-                    type="checkbox"
-                    checked={services[label] ?? false}
-                    onChange={() => toggleService(label)}
-                    className="mt-1 size-4 rounded border-border text-accent focus:ring-accent/30"
-                  />
-                  <label htmlFor={id} className="text-sm text-foreground">
-                    {label}
-                  </label>
-                </li>
-              );
-            })}
-          </ul>
-        </fieldset>
-
         <div>
-          <Label htmlFor="projectSummary" required>
-            Project summary
-          </Label>
-          <textarea
-            id="projectSummary"
-            name="projectSummary"
-            rows={4}
-            className={inputClass}
-            required
-            placeholder="What are you trying to ship in the next 90 days?"
-          />
+          <FieldLabel htmlFor="companySize">{inq.labels.companySize}</FieldLabel>
+          <select id="companySize" name="companySize" className={inputClass} defaultValue="">
+            <option value="">{inq.placeholders.companySizeSelect}</option>
+            {inq.companySizes.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
         </div>
+      </div>
 
-        <div>
-          <Label htmlFor="currentWorkflow">Current workflow / pain</Label>
-          <textarea
-            id="currentWorkflow"
-            name="currentWorkflow"
-            rows={3}
-            className={inputClass}
-            placeholder="How is the work done today? Where does it break?"
-          />
-        </div>
+      <div className="mt-5">
+        <FieldLabel htmlFor="projectDescription" required>
+          {inq.labels.projectDescription}
+        </FieldLabel>
+        <textarea
+          id="projectDescription"
+          name="projectDescription"
+          rows={5}
+          className={`${inputClass} min-h-[8.5rem] resize-y`}
+          required
+          placeholder={inq.placeholders.projectDescription}
+        />
+      </div>
 
-        <div>
-          <Label htmlFor="toolsAndStack">Tools, stack, and constraints</Label>
-          <textarea
-            id="toolsAndStack"
-            name="toolsAndStack"
-            rows={3}
-            className={inputClass}
-            placeholder="CRMs, data warehouses, security requirements, on-prem vs cloud, etc."
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="successMetrics">Success metrics</Label>
-          <textarea
-            id="successMetrics"
-            name="successMetrics"
-            rows={3}
-            className={inputClass}
-            placeholder="What numbers or outcomes would make this a win?"
-          />
-        </div>
-      </Section>
-
-      <Section index={3} title="Commercial & logistics">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <Label htmlFor="budgetRange">Budget range</Label>
-            <select id="budgetRange" name="budgetRange" className={inputClass}>
-              {budgetRanges.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <Label htmlFor="timeline">Timeline</Label>
-            <select id="timeline" name="timeline" className={inputClass}>
-              {timelines.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="sm:col-span-2">
-            <Label htmlFor="referralSource">How did you hear about us?</Label>
-            <select id="referralSource" name="referralSource" className={inputClass}>
-              {referralSources.map((o) => (
-                <option key={o || "empty"} value={o}>
-                  {o || "Select…"}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="sm:col-span-2">
-            <Label htmlFor="additionalNotes">Anything else we should know?</Label>
-            <textarea id="additionalNotes" name="additionalNotes" rows={3} className={inputClass} />
-          </div>
-        </div>
-      </Section>
-
-      <Section index={4} title="Consent">
-        <div className="flex items-start gap-3">
-          <input
-            id="consent"
-            name="consent"
-            type="checkbox"
-            required
-            className="mt-1 size-4 rounded border-border text-accent focus:ring-accent/30"
-          />
-          <label htmlFor="consent" className="text-sm leading-relaxed text-muted">
-            I agree to be contacted about this inquiry.
-            <span className="text-accent"> *</span>
-          </label>
-        </div>
-      </Section>
-
-      <motion.div
-        initial={reduceMotion ? false : { y: 10 }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: reduceMotion ? 0 : 0.4, ease: sectionEase }}
-      >
+      <div className="mt-8">
         <button
           type="submit"
-          className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-accent text-sm font-semibold text-white transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_36px_-8px_var(--color-accent-glow)] active:translate-y-0 sm:w-auto sm:min-w-[200px]"
+          className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 text-sm font-semibold uppercase tracking-wide text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_40px_-8px_var(--color-accent-glow)] active:translate-y-0"
         >
-          Submit inquiry
+          {inq.submit}
+          <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden />
         </button>
-      </motion.div>
-    </form>
+      </div>
+    </motion.form>
   );
 }

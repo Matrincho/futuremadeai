@@ -42,13 +42,11 @@ export function ServicesSection() {
               transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
             >
               <article className={`${cardInteractive} p-0 overflow-hidden md:flex`}>
-                <div className="border-b border-border p-6 md:w-[28%] md:border-b-0 md:border-r md:p-8">
-                  <div className="flex items-center gap-2 text-accent">
-                    <ArrowRight className="size-4" aria-hidden />
-                    <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                      {item.name}
-                    </h3>
-                  </div>
+                <div className="flex flex-col items-center justify-center border-b border-border p-6 text-center md:w-[28%] md:border-b-0 md:border-r md:p-8">
+                  <ArrowRight className="size-4 shrink-0 text-accent" aria-hidden />
+                  <h3 className="mt-2 text-lg font-semibold tracking-tight text-foreground">
+                    {item.name}
+                  </h3>
                 </div>
                 <div className="grid flex-1 gap-6 p-6 sm:grid-cols-3 md:p-8">
                   <div>

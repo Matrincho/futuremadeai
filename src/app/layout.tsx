@@ -11,8 +11,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Futuremade AI",
-    template: "%s · Futuremade AI",
+    default: "FutureMadeAI",
+    template: "%s · FutureMadeAI",
   },
   description:
     "AI systems and automation for teams that outgrow manual workflows.",
