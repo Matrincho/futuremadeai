@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useLocaleContext } from "@/context/locale-context";
 import { INQUIRY_PATH } from "@/lib/routes";
@@ -59,7 +59,10 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
-          <LanguageToggle className="hidden sm:inline-flex" />
+          {/* max-sm:hidden + sm:contents avoids Tailwind display conflicts on one element */}
+          <div className="max-sm:hidden sm:contents">
+            <LanguageToggle />
+          </div>
 
           <Link
             href={INQUIRY_PATH}
@@ -68,7 +71,9 @@ export function SiteHeader() {
             {t.nav.cta}
           </Link>
 
-          <LanguageToggle className="inline-flex sm:hidden" compact />
+          <div className="sm:hidden">
+            <LanguageToggle compact />
+          </div>
 
           <button
             type="button"
@@ -83,41 +88,40 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-nav"
-            initial={{ height: 0, opacity: 0.96 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0.96 }}
-            transition={{
-              duration: reduceMotion ? 0.01 : 0.25,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="border-t border-border/80 bg-background/95 md:hidden"
+      {/* Grid 0fr/1fr avoids height:auto exit jank; inert keeps focus out when collapsed */}
+      <div
+        id="mobile-nav"
+        className={`grid md:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        } ${reduceMotion ? "" : "transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"}`}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <nav
+            className="flex flex-col gap-1 border-t border-border/80 bg-background/95 px-4 py-3"
+            aria-label="Mobile"
+            aria-hidden={open ? undefined : true}
+            inert={!open ? true : undefined}
           >
-            <nav className="flex flex-col gap-1 px-4 py-3" aria-label="Mobile">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-surface hover:text-foreground"
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {navItems.map((item) => (
               <Link
-                href={INQUIRY_PATH}
+                key={item.href}
+                href={item.href}
                 onClick={() => setOpen(false)}
-                className="mt-1 inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 text-center text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] transition-[transform,box-shadow,background-color] hover:bg-[#2563eb] hover:shadow-[0_0_40px_-8px_var(--color-accent-glow)] active:translate-y-0"
+                className="rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-surface hover:text-foreground"
               >
-                {t.nav.cta}
+                {item.label}
               </Link>
-            </nav>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            ))}
+            <Link
+              href={INQUIRY_PATH}
+              onClick={() => setOpen(false)}
+              className="mt-1 inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 text-center text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] transition-[transform,box-shadow,background-color] hover:bg-[#2563eb] hover:shadow-[0_0_40px_-8px_var(--color-accent-glow)] active:translate-y-0"
+            >
+              {t.nav.cta}
+            </Link>
+          </nav>
+        </div>
+      </div>
     </motion.header>
   );
 }
